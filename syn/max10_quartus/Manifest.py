@@ -6,7 +6,7 @@ syn_device = "10M04SA"
 syn_grade = "C8G"
 syn_package = "E144"
 syn_top = "max10_top"
-syn_project = "compute"
+syn_project = "hdmi-demo"
 syn_tool = "quartus"
 
 quartus_preflow = "../../top/max10/pinout.tcl"

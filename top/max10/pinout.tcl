@@ -4,7 +4,7 @@ post_message "Assigning pinout"
 # Load Quartus II Tcl Project package
 package require ::quartus::project
 
-project_open -revision compute compute
+project_open -revision hdmi-demo hdmi-demo
 
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
