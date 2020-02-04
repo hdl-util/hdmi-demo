@@ -15,7 +15,7 @@ module max10_top (
     output wire PWM_OUT
 );
 `define ALTERA_RESERVED_QIS
-
+assign LED = 8'bz;
 assign CLK_50MHZ_ENABLE = 1'b1;
 assign CLK_32KHZ_ENABLE = 1'b0;
 
