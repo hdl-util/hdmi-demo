@@ -14,6 +14,8 @@ module max10_top (
 
     output wire PWM_OUT
 );
+`define ALTERA_RESERVED_QIS
+
 assign CLK_50MHZ_ENABLE = 1'b1;
 assign CLK_32KHZ_ENABLE = 1'b0;
 
@@ -38,21 +40,37 @@ logic [23:0] rgb;
 logic [9:0] cx, cy;
 hdmi #(.VIDEO_ID_CODE(3), .AUDIO_RATE(AUDIO_RATE), .AUDIO_BIT_WIDTH(AUDIO_BIT_WIDTH)) hdmi(.clk_tmds(clk_tmds), .clk_pixel(clk_pixel), .clk_audio(clk_audio), .rgb(rgb), .audio_sample_word('{audio_sample_word, audio_sample_word}), .tmds_p(tmds_p), .tmds_clock_p(tmds_clock_p), .tmds_n(tmds_n), .tmds_clock_n(tmds_clock_n), .cx(cx), .cy(cy));
 
-logic [7:0] character = 8'h30;
-logic [5:0] prevcy = 6'd0;
-always @(posedge clk_pixel)
+// logic [7:0] character = 8'h30;
+// logic [5:0] prevcy = 6'd0;
+// always @(posedge clk_pixel)
+// begin
+//     if (cy == 10'd0)
+//     begin
+//         character <= 8'h30;
+//         prevcy <= 6'd0;
+//     end
+//     else if (prevcy != cy[9:4])
+//     begin
+//         character <= character + 8'h01;
+//         prevcy <= cy[9:4];
+//     end
+// end
+logic [7:0] rgb_init=0;
+
+always_ff @(posedge clk_pixel)
 begin
-    if (cy == 10'd0)
+    if (cy == 0 && cx == 0)
     begin
-        character <= 8'h30;
-        prevcy <= 6'd0;
+        rgb <= 0;
+        rgb_init++; 
     end
-    else if (prevcy != cy[9:4])
-    begin
-        character <= character + 8'h01;
-        prevcy <= cy[9:4];
+    else 
+    begin 
+        rgb[15:8] <= cy[7:0] + rgb_init;
+        rgb[23:16]<= cx[7:0] + rgb_init;
+        rgb[7:0] <= {cx[5:0],cx[5:4]};
     end
 end
 
-console console(.clk_pixel(clk_pixel), .character(character), .attribute({cx[9], cy[8:6], cx[8:5]}), .cx(cx), .cy(cy), .rgb(rgb));
+// console console(.clk_pixel(clk_pixel), .character(character), .attribute({cx[9], cy[8:6], cx[8:5]}), .cx(cx), .cy(cy), .rgb(rgb));
 endmodule
