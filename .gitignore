@@ -38,5 +38,10 @@ modelsim.ini
 transcript
 work/
 *.wlf
+*.rbf
+*.jam
+*.jbc
+*.ttf
+greybox_tmp/
 
 ip_cores/
