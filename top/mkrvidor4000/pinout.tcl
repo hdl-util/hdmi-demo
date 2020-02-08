@@ -36,11 +36,11 @@ set_global_assignment -name CONFIGURATION_VCCIO_LEVEL AUTO
 set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE 100%
 set_global_assignment -name TIMING_ANALYZER_MULTICORNER_ANALYSIS ON
 set_global_assignment -name IGNORE_PARTITIONS ON
-set_global_assignment -name GENERATE_RBF_FILE ON
-set_global_assignment -name GENERATE_TTF_FILE ON
+# set_global_assignment -name GENERATE_RBF_FILE ON
+# set_global_assignment -name GENERATE_TTF_FILE ON
 set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION ON
-set_global_assignment -name GENERATE_JAM_FILE ON
-set_global_assignment -name GENERATE_JBC_FILE ON
+# set_global_assignment -name GENERATE_JAM_FILE ON
+# set_global_assignment -name GENERATE_JBC_FILE ON
 set_global_assignment -name STRATIXIII_UPDATE_MODE STANDARD
 set_global_assignment -name CYCLONEIII_CONFIGURATION_DEVICE EPCS16
 
