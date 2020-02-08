@@ -134,7 +134,7 @@ reg [5:0] rRESETCNT;
 wire clk_tmds;
 wire clk_pixel;
 wire clk_audio;
-hdmi_pll hdmi_pll(.inclk0(CLK_48MHZ), .c0(clk_tmds), .c1(clk_pixel), .c2(clk_audio));
+hdmi_pll hdmi_pll(.inclk0(CLK_48MHZ), .c0(clk_pixel), .c1(clk_tmds), .c2(clk_audio));
 
 localparam AUDIO_BIT_WIDTH = 16;
 localparam AUDIO_RATE = 48000;
