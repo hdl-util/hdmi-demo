@@ -127,10 +127,6 @@ mem_pll mem_pll (
     .c2(FLASH_CLK)
 );
 
-
-reg [5:0] rRESETCNT;
-
-
 wire clk_pixel_x5;
 wire clk_pixel;
 wire clk_audio;
