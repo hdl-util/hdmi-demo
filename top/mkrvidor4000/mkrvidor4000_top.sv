@@ -139,12 +139,6 @@ localparam WAVE_RATE = 480;
 logic [AUDIO_BIT_WIDTH-1:0] audio_sample_word;
 sawtooth #(.BIT_WIDTH(AUDIO_BIT_WIDTH), .SAMPLE_RATE(AUDIO_RATE), .WAVE_RATE(WAVE_RATE)) sawtooth (.clk_audio(clk_audio), .level(audio_sample_word));
 
-logic PWM_OUT;
-logic [AUDIO_BIT_WIDTH:0] pwm_acc = 0;
-assign PWM_OUT = pwm_acc[AUDIO_BIT_WIDTH];
-always @(posedge clk_audio)
-    pwm_acc <= pwm_acc[AUDIO_BIT_WIDTH-1:0] + audio_sample_word;
-
 logic [23:0] rgb;
 logic [9:0] cx, cy;
   hdmi #(.VIDEO_ID_CODE(4), .DDRIO(1), .AUDIO_RATE(AUDIO_RATE), .AUDIO_BIT_WIDTH(AUDIO_BIT_WIDTH)) hdmi(.clk_pixel_x10(clk_pixel_x5), .clk_pixel(clk_pixel), .clk_audio(clk_audio), .rgb(rgb), .audio_sample_word('{audio_sample_word, audio_sample_word}), .tmds_p(HDMI_TX), .tmds_clock_p(HDMI_CLK), .tmds_n(HDMI_TX_N), .tmds_clock_n(HDMI_CLK_N), .cx(cx), .cy(cy));
