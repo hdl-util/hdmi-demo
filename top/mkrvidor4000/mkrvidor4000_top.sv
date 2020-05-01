@@ -23,7 +23,7 @@ localparam WAVE_RATE = 480;
 
 logic [AUDIO_BIT_WIDTH-1:0] audio_sample_word;
 logic [AUDIO_BIT_WIDTH-1:0] audio_sample_word_dampened; // This is to avoid giving you a heart attack -- it'll be really loud if it uses the full dynamic range.
-assign audio_sample_word_dampened = audio_sample_word >> 8;
+assign audio_sample_word_dampened = audio_sample_word >> 9;
 
 sawtooth #(.BIT_WIDTH(AUDIO_BIT_WIDTH), .SAMPLE_RATE(AUDIO_RATE), .WAVE_RATE(WAVE_RATE)) sawtooth (.clk_audio(clk_audio), .level(audio_sample_word));
 
