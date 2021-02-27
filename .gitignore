@@ -45,3 +45,17 @@ work/
 greybox_tmp/
 
 ip_cores/
+
+# Vivado ignore
+*.jou
+*.log
+*.xpr
+*.str
+*.cache/
+*.hw/
+*.ip_user_files/
+*.runs/
+synthesize.tcl
+par
+par.tcl
+synthesize
