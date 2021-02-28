@@ -18,14 +18,14 @@ module sea_top
 wire clk_pixel_x5;
 wire clk_pixel;
 wire clk_audio;
-hdmi_pll_xilinx hdmi_pll(.in_clk(CLK_100MHZ), .c0(clk_pixel), .c1(clk_pixel_x5));
+hdmi_pll_xilinx hdmi_pll(.clk_in1(CLK_100MHZ), .clk_out1(clk_pixel), .clk_out2(clk_pixel_x5));
 
-logic [9:0] counter = 1'd0;
+logic [10:0] counter = 1'd0;
 always_ff @(posedge clk_pixel)
 begin
-    counter <= counter == 10'd524 ? 1'd0 : counter + 1'd1;
+    counter <= counter == 11'd1546 ? 1'd0 : counter + 1'd1;
 end
-assign clk_audio = clk_pixel && counter == 10'd524;
+assign clk_audio = clk_pixel && counter == 11'd1546;
 
 localparam AUDIO_BIT_WIDTH = 16;
 localparam AUDIO_RATE = 48000;
@@ -39,18 +39,18 @@ sawtooth #(.BIT_WIDTH(AUDIO_BIT_WIDTH), .SAMPLE_RATE(AUDIO_RATE), .WAVE_RATE(WAV
 
 logic [23:0] rgb;
 logic [9:0] cx, cy;
-// logic [2:0] tmds;
-// logic tmds_clock;
-hdmi #(.VIDEO_ID_CODE(1), .DDRIO(0), .VIDEO_REFRESH_RATE(60.0), .AUDIO_RATE(AUDIO_RATE), .AUDIO_BIT_WIDTH(AUDIO_BIT_WIDTH)) hdmi(.clk_pixel_x10(clk_pixel_x5), .clk_pixel(clk_pixel), .clk_audio(clk_audio), .rgb(rgb), .audio_sample_word('{audio_sample_word_dampened, audio_sample_word_dampened}), .tmds_p(HDMI_TX), .tmds_n(HDMI_TX_N), .tmds_clock_p(HDMI_CLK), .tmds_clock_n(HDMI_CLK_N), .cx(cx), .cy(cy));
+logic [2:0] tmds;
+logic tmds_clock;
+hdmi #(.VIDEO_ID_CODE(4), .VIDEO_REFRESH_RATE(60.0), .AUDIO_RATE(AUDIO_RATE), .AUDIO_BIT_WIDTH(AUDIO_BIT_WIDTH)) hdmi(.clk_pixel_x5(clk_pixel_x5), .clk_pixel(clk_pixel), .clk_audio(clk_audio), .rgb(rgb), .audio_sample_word('{audio_sample_word_dampened, audio_sample_word_dampened}), .tmds(tmds), .tmds_clock(tmds_clock), .cx(cx), .cy(cy));
 
-// genvar i;
-// generate
-//     for (i = 0; i < 3; i++)
-//     begin: obufds_gen
-//         OBUFDS #(.IOSTANDARD("TMDS_33")) obufds (.I(tmds[i]), .O(HDMI_TX[i]), .OB(HDMI_TX_N[i]));
-//     end
-//     OBUFDS #(.IOSTANDARD("TMDS_33")) obufds_clock(.I(tmds_clock), .O(HDMI_CLK), .OB(HDMI_CLK_N));
-// endgenerate
+genvar i;
+generate
+    for (i = 0; i < 3; i++)
+    begin: obufds_gen
+        OBUFDS #(.IOSTANDARD("TMDS_33")) obufds (.I(tmds[i]), .O(HDMI_TX[i]), .OB(HDMI_TX_N[i]));
+    end
+    OBUFDS #(.IOSTANDARD("TMDS_33")) obufds_clock(.I(tmds_clock), .O(HDMI_CLK), .OB(HDMI_CLK_N));
+endgenerate
 
 logic [7:0] character = 8'h30;
 logic [5:0] prevcy = 6'd0;

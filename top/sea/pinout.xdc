@@ -41,6 +41,10 @@ set_property PACKAGE_PIN F2 [get_ports HDMI_SDA]
 set_property PACKAGE_PIN F3 [get_ports HDMI_SCL]
 set_property PACKAGE_PIN D4 [get_ports HDMI_HPD]
 
+
+set_property IOSTANDARD LVCMOS33 [get_ports RESET]
+set_property PACKAGE_PIN D14 [get_ports RESET]
+
 set_property IOSTANDARD LVCMOS33 [get_ports CLK_100MHZ]
 set_property PACKAGE_PIN H4 [get_ports CLK_100MHZ]
 create_clock -add -name CLK_100MHZ -period 10.00 -waveform {0 5} [get_ports CLK_100MHZ]
