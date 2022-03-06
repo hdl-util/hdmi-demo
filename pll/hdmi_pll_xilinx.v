@@ -52,8 +52,7 @@
 //----------------------------------------------------------------------------
 // None
 
-`ifdef USE_125MHZ
-//
+// If using 125MHz clock, add synthesis argument `-verilog_define USE_125MHZ=1`
 //----------------------------------------------------------------------------
 //  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
 //   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
@@ -65,8 +64,8 @@
 // Input Clock   Freq (MHz)    Input Jitter (UI)
 //----------------------------------------------------------------------------
 // __primary_________125.000____________0.010
-`else // USE_100MHZ
-//
+
+// Default: 100MHz clock source
 //----------------------------------------------------------------------------
 //  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
 //   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
@@ -78,7 +77,6 @@
 // Input Clock   Freq (MHz)    Input Jitter (UI)
 //----------------------------------------------------------------------------
 // __primary_________100.000____________0.010
-`endif
 
 `timescale 1ps/1ps
 
