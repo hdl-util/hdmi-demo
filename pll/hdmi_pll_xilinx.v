@@ -51,7 +51,21 @@
 // User entered comments
 //----------------------------------------------------------------------------
 // None
+
+// If using 125MHz clock, add synthesis argument `-verilog_define USE_125MHZ=1`
+//----------------------------------------------------------------------------
+//  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
+//   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
+//----------------------------------------------------------------------------
+// clk_out1____74.256______0.000______50.0______239.766____368.066
+// clk_out2___371.280______0.000______50.0______192.979____368.066
 //
+//----------------------------------------------------------------------------
+// Input Clock   Freq (MHz)    Input Jitter (UI)
+//----------------------------------------------------------------------------
+// __primary_________125.000____________0.010
+
+// Default: 100MHz clock source
 //----------------------------------------------------------------------------
 //  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
 //   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
@@ -124,19 +138,27 @@ wire clk_in2_clk_wiz_0;
     .CLKOUT4_CASCADE      ("FALSE"),
     .COMPENSATION         ("ZHOLD"),
     .STARTUP_WAIT         ("FALSE"),
+`ifdef USE_125MHZ
+    .DIVCLK_DIVIDE        (7),
+    .CLKFBOUT_MULT_F      (62.375),
+    .CLKOUT0_DIVIDE_F     (15.000),
+    .CLKOUT1_DIVIDE       (3),
+    .CLKIN1_PERIOD        (8.000),
+`else // USE_100MHZ
     .DIVCLK_DIVIDE        (5),
     .CLKFBOUT_MULT_F      (37.125),
+    .CLKOUT0_DIVIDE_F     (10.000),
+    .CLKOUT1_DIVIDE       (2),
+    .CLKIN1_PERIOD        (10.000),
+`endif
     .CLKFBOUT_PHASE       (0.000),
     .CLKFBOUT_USE_FINE_PS ("FALSE"),
-    .CLKOUT0_DIVIDE_F     (10.000),
     .CLKOUT0_PHASE        (0.000),
     .CLKOUT0_DUTY_CYCLE   (0.500),
     .CLKOUT0_USE_FINE_PS  ("FALSE"),
-    .CLKOUT1_DIVIDE       (2),
     .CLKOUT1_PHASE        (0.000),
     .CLKOUT1_DUTY_CYCLE   (0.500),
-    .CLKOUT1_USE_FINE_PS  ("FALSE"),
-    .CLKIN1_PERIOD        (10.000))
+    .CLKOUT1_USE_FINE_PS  ("FALSE"))
   mmcm_adv_inst
     // Output clocks
    (
